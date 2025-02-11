@@ -1,11 +1,25 @@
 const express = require("express");
 const app = express();
-const cors = require("cors");
 const popular = require("./movie-data");
-app.use(cors());
+const bodyParser = require("body-parser");
 
-app.get("/popular", function (req, res) {
-  res.send(popular);
+app.use(bodyParser());
+
+let users = [];
+
+const addUser = (userData) => {
+  users.push(userData);
+  console.log(users);
+};
+
+app.post("/user", (req, res) => {
+  console.log("body", req.body);
+  addUser(req.body);
+  res.send("user succesfully added");
+});
+
+app.get("/user", (request, response) => {
+  response.send(users);
 });
 
 app.listen(4000);
